@@ -1,6 +1,7 @@
-const { verify } = require('jsonwebtoken')
-const authConfig = require('../config/auth.config')
-const db = require('../models')
+import jwt from 'jsonwebtoken'
+import { AuthConfig } from '../config/index.js'
+import db from '../models/index.js'
+
 const User = db.user
 
 const verifyToken = (req, res, next) => {
@@ -8,7 +9,7 @@ const verifyToken = (req, res, next) => {
 
   if (!token) return res.status(403).send({ message: 'No token provided!' })
 
-  verify(token, authConfig.secret, (err, decode) => {
+  jwt.verify(token, AuthConfig.secret, (err, decode) => {
     if (err) return res.status(401).send({ message: 'Unathorized!' })
     req.userId = decode.id
     next()
@@ -54,4 +55,4 @@ const isModeratorOrAdmin = (req, res, next) => {
   })
 }
 
-module.exports = { verifyToken, isAdmin, isModerator, isModeratorOrAdmin }
+export { verifyToken, isAdmin, isModerator, isModeratorOrAdmin }

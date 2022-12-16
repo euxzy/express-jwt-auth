@@ -1,13 +1,14 @@
-const jwt = require('jsonwebtoken')
-const bcrypt = require('bcryptjs')
+import jwt from 'jsonwebtoken'
+import bcrypt from 'bcryptjs'
 
-const db = require('../models')
-const authConfig = require('../config/auth.config')
+import db from '../models/index.js'
+import { AuthConfig } from '../config/index.js'
+
 const User = db.user
 const Role = db.role
 const Op = db.Sequelize.Op
 
-exports.signup = (req, res) => {
+const signup = (req, res) => {
   // save user to db
   User.create({
     username: req.body.username,
@@ -37,7 +38,7 @@ exports.signup = (req, res) => {
     })
 }
 
-exports.signin = (req, res) => {
+const signin = (req, res) => {
   User.findOne({
     where: {
       username: req.body.username,
@@ -58,7 +59,7 @@ exports.signin = (req, res) => {
         })
       }
 
-      const token = jwt.sign({ id: user.id }, authConfig.secret, {
+      const token = jwt.sign({ id: user.id }, AuthConfig.secret, {
         expiresIn: 86400,
       })
 
@@ -80,3 +81,5 @@ exports.signin = (req, res) => {
       res.status(500).send({ message: err.message })
     })
 }
+
+export { signup, signin }

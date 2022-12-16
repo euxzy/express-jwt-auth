@@ -1,7 +1,7 @@
-const { authJwt } = require('../middleware')
-const controller = require('../controllers/user.controller')
+import { authJwt } from '../middleware/index.js'
+import * as controller from '../controllers/user.controller.js'
 
-module.exports = (app) => {
+const UserRoutes = (app) => {
   app.use((req, res, next) => {
     res.header(
       'Access-Control-Allow-Headers',
@@ -23,3 +23,5 @@ module.exports = (app) => {
     controller.adminBoard
   )
 }
+
+export default UserRoutes

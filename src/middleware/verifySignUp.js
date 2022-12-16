@@ -1,4 +1,4 @@
-const db = require('../models')
+import db from '../models/index.js'
 const { ROLES } = db
 const User = db.user
 
@@ -43,4 +43,4 @@ const checkRolesExisted = (req, res, next) => {
   next()
 }
 
-module.exports = { checkDuplicateUsernameOrEmail, checkRolesExisted }
+export { checkDuplicateUsernameOrEmail, checkRolesExisted }
