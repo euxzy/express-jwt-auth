@@ -2,7 +2,9 @@ import {
   checkDuplicateUsernameOrEmail,
   checkRolesExisted,
 } from '../middleware/verifySignUp.js'
-import { signin, signup } from '../controllers/auth.controller.js'
+import { AuthController } from '../controllers/index.js'
+
+const { signin, signup } = AuthController
 
 const AuthRoutes = (app) => {
   app.use((req, res, next) => {

@@ -4,9 +4,11 @@ import bcrypt from 'bcryptjs'
 import db from '../models/index.js'
 import { AuthConfig } from '../config/index.js'
 
-const User = db.user
-const Role = db.role
-const Op = db.Sequelize.Op
+const {
+  role: Role,
+  user: User,
+  Sequelize: { Op },
+} = db
 
 const signup = (req, res) => {
   // save user to db
