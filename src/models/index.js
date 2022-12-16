@@ -2,6 +2,7 @@ import { Sequelize } from 'sequelize'
 import { DbConfig } from '../config/index.js'
 import UserModel from './user.model.js'
 import RoleModel from './role.model.js'
+import CustomerModel from './customer.model.js'
 
 const sequelize = new Sequelize(DbConfig.DB, DbConfig.USER, DbConfig.PASSWORD, {
   host: DbConfig.HOST,
@@ -22,6 +23,7 @@ db.sequelize = sequelize
 
 db.user = UserModel(sequelize, Sequelize)
 db.role = RoleModel(sequelize, Sequelize)
+db.customer = CustomerModel(sequelize, Sequelize)
 
 db.role.belongsToMany(db.user, {
   through: 'user_roles',
