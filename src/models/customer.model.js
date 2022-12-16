@@ -1,9 +1,5 @@
 const CustomerModel = (sequelize, Sequelize) => {
   const Customer = sequelize.define('customers', {
-    id: {
-      type: Sequelize.INTEGER,
-      primaryKey: true,
-    },
     name: {
       type: Sequelize.STRING,
     },

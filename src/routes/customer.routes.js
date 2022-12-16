@@ -1,23 +1,11 @@
 import { Router } from 'express'
+import { CustomerController } from '../controllers/index.js'
 
 const CustomerRouter = Router()
+const { create } = CustomerController
 
-CustomerRouter.get('/', (req, res) => {
-  res.send({
-    status: true,
-    statusCode: 200,
-    message: 'Get Data Customer Success!',
-    data: {},
-  })
-})
-CustomerRouter.post('/', (req, res) => {
-  res.status(200).send({
-    status: true,
-    statusCode: 200,
-    message: 'Create Customer Success!',
-    data: req.body,
-  })
-})
+CustomerRouter.get('/')
+CustomerRouter.post('/', create)
 CustomerRouter.put('/', (req, res) => {
   const data = {
     name: 'Fulanah',
