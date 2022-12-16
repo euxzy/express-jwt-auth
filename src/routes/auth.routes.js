@@ -3,25 +3,18 @@ import {
   checkRolesExisted,
 } from '../middleware/verifySignUp.js'
 import { AuthController } from '../controllers/index.js'
+import { Router } from 'express'
 
 const { signin, signup } = AuthController
 
-const AuthRoutes = (app) => {
-  app.use((req, res, next) => {
-    res.header(
-      'Access-Control-Allow-Headers',
-      'x-access-token, Origin, Content-Type, Accept'
-    )
-    next()
-  })
+const AuthRouter = Router()
 
-  app.post(
-    '/api/auth/signup',
-    [checkDuplicateUsernameOrEmail, checkRolesExisted],
-    signup
-  )
+AuthRouter.post(
+  '/signup',
+  [checkDuplicateUsernameOrEmail, checkRolesExisted],
+  signup
+)
 
-  app.post('/api/auth/signin', signin)
-}
+AuthRouter.post('/signin', signin)
 
-export default AuthRoutes
+export default AuthRouter

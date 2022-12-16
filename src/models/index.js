@@ -1,5 +1,5 @@
 import { Sequelize } from 'sequelize'
-import DbConfig from '../config/db.config.js'
+import { DbConfig } from '../config/index.js'
 import UserModel from './user.model.js'
 import RoleModel from './role.model.js'
 

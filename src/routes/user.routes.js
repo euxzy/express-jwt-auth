@@ -1,25 +1,15 @@
 import { authJwt } from '../middleware/index.js'
 import { UserController } from '../controllers/index.js'
+import { Router } from 'express'
 
 const { adminBoard, moderatorBoard, userBoard, allAccess } = UserController
+const { isAdmin, isModerator, verifyToken } = authJwt
 
-const UserRoutes = (app) => {
-  app.use((req, res, next) => {
-    res.header(
-      'Access-Control-Allow-Headers',
-      'x-access-token, Origin, Content-Type, Accept'
-    )
-    next()
-  })
+const UserRouter = Router()
 
-  app.get('/api/test/all', allAccess)
-  app.get('/api/test/user', [authJwt.verifyToken], userBoard)
-  app.get(
-    '/api/test/mod',
-    [authJwt.verifyToken, authJwt.isModerator],
-    moderatorBoard
-  )
-  app.get('/api/test/admin', [authJwt.verifyToken, authJwt.isAdmin], adminBoard)
-}
+UserRouter.get('/all', allAccess)
+UserRouter.get('/user', [verifyToken], userBoard)
+UserRouter.get('/mod', [verifyToken, isModerator], moderatorBoard)
+UserRouter.get('/admin', [verifyToken, isAdmin], adminBoard)
 
-export default UserRoutes
+export default UserRouter
