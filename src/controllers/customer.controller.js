@@ -40,4 +40,22 @@ const create = (req, res) => {
   })
 }
 
-export { showAll, showCust, create }
+const update = (req, res) => {
+  Customer.findByPk(req.params.id).then((cust) => {
+    if (req.body.name) cust.name = req.body.name
+    if (req.body.username) cust.username = req.body.username
+    if (req.body.email) cust.email = req.body.email
+    if (req.body.password) cust.password = bcrypt.hashSync(req.body.password, 8)
+
+    cust.save()
+
+    res.status(200).send({
+      status: true,
+      statusCode: 200,
+      message: 'Update data Success!',
+      data: cust,
+    })
+  })
+}
+
+export { showAll, showCust, create, update }
