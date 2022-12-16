@@ -3,6 +3,17 @@ import db from '../models/index.js'
 
 const { customer: Customer } = db
 
+const showAll = (req, res) => {
+  Customer.findAll().then((custs) => {
+    res.status(200).send({
+      status: true,
+      statusCode: 200,
+      message: 'Get All Data Successfully!',
+      data: custs,
+    })
+  })
+}
+
 const create = (req, res) => {
   Customer.create({
     name: req.body.name,
@@ -13,9 +24,9 @@ const create = (req, res) => {
   res.status(200).send({
     status: true,
     statusCode: 200,
-    message: 'Create data Successfully!',
+    message: 'Create Data Successfully!',
     data: req.body,
   })
 }
 
-export { create }
+export { showAll, create }

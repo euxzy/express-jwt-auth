@@ -2,10 +2,10 @@ import { Router } from 'express'
 import { CustomerController } from '../controllers/index.js'
 
 const CustomerRouter = Router()
-const { create } = CustomerController
+const { showAll, create } = CustomerController
 
-CustomerRouter.get('/')
-CustomerRouter.post('/', create)
+CustomerRouter.get('/', showAll)
+CustomerRouter.post('/create', create)
 CustomerRouter.put('/', (req, res) => {
   const data = {
     name: 'Fulanah',
