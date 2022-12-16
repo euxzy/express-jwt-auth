@@ -14,6 +14,17 @@ const showAll = (req, res) => {
   })
 }
 
+const showCust = (req, res) => {
+  Customer.findByPk(req.params.id).then((cust) => {
+    res.status(200).send({
+      status: true,
+      statusCode: 200,
+      message: 'Get Data Successfully!',
+      data: cust,
+    })
+  })
+}
+
 const create = (req, res) => {
   Customer.create({
     name: req.body.name,
@@ -29,4 +40,4 @@ const create = (req, res) => {
   })
 }
 
-export { showAll, create }
+export { showAll, showCust, create }
