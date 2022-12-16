@@ -1,9 +1,11 @@
 import AuthRouter from './auth.routes.js'
+import CustomerRouter from './customer.routes.js'
 import UserRouter from './user.routes.js'
 
 const _apiRoutes = [
   ['auth', AuthRouter],
   ['test', UserRouter],
+  ['cust', CustomerRouter],
 ]
 
 export const routes = (app) => {
