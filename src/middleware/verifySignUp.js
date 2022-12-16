@@ -1,6 +1,5 @@
 import db from '../models/index.js'
-const { ROLES } = db
-const User = db.user
+const { ROLES, user: User } = db
 
 const checkDuplicateUsernameOrEmail = (req, res, next) => {
   // username
