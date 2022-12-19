@@ -5,23 +5,39 @@ const { customer: Customer } = db
 
 const showAll = (req, res) => {
   Customer.findAll().then((custs) => {
-    res.status(200).send({
-      status: true,
-      statusCode: 200,
-      message: 'Get All Data Successfully!',
-      data: custs,
-    })
+    if (custs.length > 0) {
+      res.status(200).send({
+        status: true,
+        statusCode: 200,
+        message: 'Get All Data Successfully!',
+        data: custs,
+      })
+    } else {
+      res.status(404).send({
+        status: false,
+        statusCode: 404,
+        message: 'No Customer Here!',
+      })
+    }
   })
 }
 
 const showCust = (req, res) => {
   Customer.findByPk(req.params.id).then((cust) => {
-    res.status(200).send({
-      status: true,
-      statusCode: 200,
-      message: 'Get Data Successfully!',
-      data: cust,
-    })
+    if (cust) {
+      res.status(200).send({
+        status: true,
+        statusCode: 200,
+        message: 'Get Data Successfully!',
+        data: cust,
+      })
+    } else {
+      res.status(404).send({
+        status: false,
+        statusCode: 404,
+        message: 'Customer Not Found!',
+      })
+    }
   })
 }
 
@@ -42,19 +58,28 @@ const create = (req, res) => {
 
 const update = (req, res) => {
   Customer.findByPk(req.params.id).then((cust) => {
-    if (req.body.name) cust.name = req.body.name
-    if (req.body.username) cust.username = req.body.username
-    if (req.body.email) cust.email = req.body.email
-    if (req.body.password) cust.password = bcrypt.hashSync(req.body.password, 8)
+    if (cust) {
+      if (req.body.name) cust.name = req.body.name
+      if (req.body.username) cust.username = req.body.username
+      if (req.body.email) cust.email = req.body.email
+      if (req.body.password)
+        cust.password = bcrypt.hashSync(req.body.password, 8)
 
-    cust.save()
+      cust.save()
 
-    res.status(200).send({
-      status: true,
-      statusCode: 200,
-      message: 'Update data Success!',
-      data: cust,
-    })
+      res.status(200).send({
+        status: true,
+        statusCode: 200,
+        message: 'Update data Success!',
+        data: cust,
+      })
+    } else {
+      res.status(404).send({
+        status: false,
+        statusCode: 404,
+        message: 'Customer Not Found!',
+      })
+    }
   })
 }
 
@@ -63,13 +88,17 @@ const destroy = (req, res) => {
   Customer.findOne({ where: { username } }).then((cust) => {
     if (cust) {
       Customer.destroy({ where: { username } }).then(() => {
-        res.send({
-          message: `Customer dengan username ${username} berhasil dihapus`,
+        res.status(200).send({
+          status: true,
+          statusCode: 200,
+          message: `Customer with username ${username} has been deleted!`,
         })
       })
     } else {
-      res.send({
-        message: `Customer dengan username ${username} tidak ditemukan`,
+      res.status(404).send({
+        status: false,
+        statusCode: 404,
+        message: `Customer with username ${username} not found!`,
       })
     }
   })
