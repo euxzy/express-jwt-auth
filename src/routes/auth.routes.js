@@ -1,13 +1,10 @@
-import {
-  checkDuplicateUsernameOrEmail,
-  checkRolesExisted,
-} from '../middleware/verifySignUp.js'
-import { AuthController } from '../controllers/index.js'
 import { Router } from 'express'
-
-const { signin, signup } = AuthController
+import { AuthController } from '../controllers/index.js'
+import { verifySignUp } from '../middleware/index.js'
 
 const AuthRouter = Router()
+const { signin, signup } = AuthController
+const { checkDuplicateUsernameOrEmail, checkRolesExisted } = verifySignUp
 
 AuthRouter.post(
   '/signup',

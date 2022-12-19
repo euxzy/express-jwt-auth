@@ -12,6 +12,9 @@ const CustomerModel = (sequelize, Sequelize) => {
     password: {
       type: Sequelize.STRING,
     },
+    address: {
+      type: Sequelize.TEXT,
+    },
   })
   return Customer
 }
