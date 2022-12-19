@@ -58,4 +58,21 @@ const update = (req, res) => {
   })
 }
 
-export { showAll, showCust, create, update }
+const destroy = (req, res) => {
+  const { username } = req.body
+  Customer.findOne({ where: { username } }).then((cust) => {
+    if (cust) {
+      Customer.destroy({ where: { username } }).then(() => {
+        res.send({
+          message: `Customer dengan username ${username} berhasil dihapus`,
+        })
+      })
+    } else {
+      res.send({
+        message: `Customer dengan username ${username} tidak ditemukan`,
+      })
+    }
+  })
+}
+
+export { showAll, showCust, create, update, destroy }
